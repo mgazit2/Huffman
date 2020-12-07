@@ -15,6 +15,7 @@ class MyComparator implements Comparator<HuffmanNode> {
     // compare two nodes
     public int compare (HuffmanNode x, HuffmanNode y){
         // return sum for evaluation
+        // test push
         return x.data - y.data;
     }
 } // end class MyComparator
