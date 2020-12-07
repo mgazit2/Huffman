@@ -15,6 +15,7 @@ class MyComparator implements Comparator<HuffmanNode> {
     // compare two nodes
     public int compare (HuffmanNode x, HuffmanNode y){
         // return sum for evaluation
+        // test push
         return x.data - y.data;
     }
 } // end class MyComparator
@@ -40,6 +41,26 @@ public class Huffman {
         PrintCode(node.right, s + "1");
     } // end class Huffman
 
+    public static String HuffDecode(HuffmanNode root, String s) {
+        String answer = "";
+        HuffmanNode current = root;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '0'){
+                current = current.left;
+            }
+            else {
+                current = current.right;
+            }
+
+            if (current.left == null && current.right == null) {
+                answer += current.c;
+                current = root;
+            }
+        }
+        String s1 = answer + "\n\0";
+        return s1;
+    }
+
     public static void main(String[] args){
         /* Scanner s = new Scanner(System.in); */
 
@@ -47,9 +68,11 @@ public class Huffman {
         String test = "I like-a the poopoo";
         List <Character> keyList = new ArrayList<Character>();
         List <Integer> valList = new ArrayList<Integer>();
-        int n = 6;
+        String encodedString = new String();
+
+        /*int n = 6;
         char[] charArray = {'a','b','c','d','e','f'};
-        int[] charFreq = {5,9,12,13,16,45};
+        int[] charFreq = {5,9,12,13,16,45};*/
 
         CalcFreq(test, freq);
 
@@ -71,7 +94,7 @@ public class Huffman {
 
         //create priority queue
         PriorityQueue<HuffmanNode> q =
-                new PriorityQueue<HuffmanNode>(n, new MyComparator());
+                new PriorityQueue<HuffmanNode>(freq.size(), new MyComparator());
 
         for (int i = 0; i < freq.size(); i++) {
             HuffmanNode hn = new HuffmanNode();
@@ -116,11 +139,7 @@ public class Huffman {
             // add to this priority queue
             q.add(f);
         }
-        if (root.left == null) {
-            System.out.println("Huh?");
-        }
-        //System.out.print(root);
-        //System.out.print(q);
+        System.out.print(HuffDecode(root, "000000010010001101010101"));
         PrintCode(root, "");
     }
 }
